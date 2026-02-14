@@ -2,181 +2,212 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Svetlana Mihalchina | Ритм</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Метаболічний Ритм - Твій антистрес-інструмент</title>
     <style>
-        /* Жорстке скидання для всіх пристроїв */
+        :root {
+            --bg: #f9f7f2;
+            --card: #ffffff;
+            --work: #8da399;
+            --break: #d4a373;
+            --txt: #3d4240;
+            --dim: #7a827e;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
+            background-color: var(--bg);
+            color: var(--txt);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.4;
+            transition: background-color 1.2s ease;
         }
 
-        .container {
-            width: 100%;
-            max-width: 380px; /* Трохи вужче для мобільних */
-            background: #fff;
-            padding: 10px 15px;
+        body.break-mode { background-color: #f2ede4; }
+
+        .hero {
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        h1 { font-size: 1.1rem; margin: 5px 0; color: #333; }
-
-        /* Текст НАД таймером */
-        .header-text h2 {
-            font-size: 1rem;
-            color: #d35400;
-            margin: 5px 0 0 0;
-            text-transform: uppercase;
-        }
-        .header-text p {
-            font-size: 0.85rem;
-            margin: 2px 0 10px 0;
-            font-weight: bold;
-        }
-
-        /* Таймер (твої "краплі") */
-        .timer-display {
-            margin: 5px auto;
-            width: 160px; /* Ще компактніше для смартфонів */
-            height: 160px;
-            border: 5px solid #27ae60;
-            border-radius: 50%;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 10px;
         }
 
-        .time { font-size: 2.8rem; font-weight: bold; }
+        .header { margin-bottom: 20px; }
+        .header h1 { font-size: 1.1rem; opacity: 0.6; font-weight: 400; margin-bottom: 8px; }
+        .header h2 { font-size: 1.4rem; color: #d35400; text-transform: uppercase; letter-spacing: 0.5px; }
+        .header p { font-weight: 600; font-size: 1rem; margin-top: 4px; }
 
-        .controls { margin: 10px 0; }
+        .timer-card {
+            background: var(--card);
+            width: 100%;
+            max-width: 360px;
+            padding: 25px 20px;
+            border-radius: 32px;
+            box-shadow: 0 12px 40px rgba(61, 66, 64, 0.06);
+            position: relative;
+        }
 
-        button {
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #27ae60;
+        .timer-display {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border: 8px solid #eee;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: border-color 0.8s ease;
+        }
+
+        .time { font-size: 3.5rem; font-weight: 700; color: var(--txt); letter-spacing: -1px; }
+        .mode-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-top: -4px; }
+
+        .controls button {
+            background: var(--work);
             color: white;
-            margin: 0 5px;
+            border: none;
+            padding: 14px 44px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(141, 163, 153, 0.3);
         }
 
-        /* Текст ПІД таймером */
-        .content-bottom {
-            text-align: left;
-            margin-top: 10px;
-        }
-
-        .main-message {
+        .cycle-counter {
+            margin-top: 12px;
             font-size: 0.85rem;
-            line-height: 1.3;
-            color: #333;
-            margin-bottom: 10px;
+            color: var(--work);
+            font-weight: 600;
         }
 
-        .highlight-text {
-            font-size: 1rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
+        .content-footer {
+            text-align: left;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #f0eee9;
         }
+
+        .content-footer p { font-size: 0.9rem; color: #555; margin-bottom: 12px; }
+        .content-footer strong { font-size: 1.05rem; display: block; margin-bottom: 8px; color: var(--txt); }
 
         .tg-link {
             display: block;
-            text-decoration: none;
-            background-color: #2980b9;
+            background: #2980b9;
             color: white !important;
-            padding: 12px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: bold;
+            text-decoration: none;
             text-align: center;
-            margin-top: 10px;
-        }
-
-        /* Спеціальний фікс для маленьких екранів */
-        @media screen and (max-height: 650px) {
-            .timer-display { width: 140px; height: 140px; }
-            .time { font-size: 2.2rem; }
-            .main-message { font-size: 0.8rem; }
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Svetlana Mihalchina</h1>
-    
-    <div class="header-text">
+<div class="hero">
+    <div class="header">
+        <h1>Svetlana Mihalchina</h1>
         <h2>Стоп кортизол - Геть набряки</h2>
         <p>Твій метаболічний ритм</p>
     </div>
 
-    <div class="timer-display">
-        <div class="time" id="timer">25:00</div>
-    </div>
+    <div class="timer-card">
+        <div class="timer-display" id="circle">
+            <div class="time" id="display">25:00</div>
+            <div class="mode-label" id="mode">Фокус</div>
+        </div>
 
-    <div class="controls">
-        <button id="startStop" onclick="toggle()">СТАРТ</button>
-        <button style="background:#95a5a6" onclick="reset()">Скинути</button>
-    </div>
+        <div class="controls">
+            <button id="btnStart" onclick="toggleTimer()">Пуск</button>
+            <div class="cycle-counter" id="cycleCount">Виконано циклів: 0</div>
+        </div>
 
-    <div class="content-bottom">
-        <p class="main-message">
-            Кортизол не розрізняє реальну загрозу та робочий аврал. Постійна напруга-сигнал організму "запасати воду та жир". Ці 25 хвилин фокусу допомагають вийти з режиму виживання.
-        </p>
-        
-        <span class="highlight-text">Ти не повинна виживати.</span>
-        
-        <p style="font-size: 0.85rem;">В моєму телеграмі - про те, як підтримати організм:</p>
-        
-        <a href="https://t.me/+nawx4tmAkOszMDJi" class="tg-link" target="_blank">Приєднатися до каналу</a>
+        <div class="content-footer">
+            <p>Кортизол не розрізняє реальну загрозу та робочий аврал. Постійна напруга-сигнал організму "запасати воду та жир". Ці 25 хвилин фокусу допомагають вийти з режиму виживання.</p>
+            <strong>Ти не повинна виживати.</strong>
+            <p>В моєму телеграмі - про те, як підтримати організм:</p>
+            <a href="https://t.me/+nawx4tmAkOszMDJi" class="tg-link" target="_blank">Приєднатися до каналу</a>
+        </div>
     </div>
 </div>
 
 <script>
-    let timeLeft = 1500;
-    let timerId = null;
+    let state = {
+        timeLeft: 1500,
+        isWork: true,
+        timerId: null,
+        sessions: 0
+    };
 
-    function updateDisplay() {
-        const m = Math.floor(timeLeft / 60);
-        const s = timeLeft % 60;
-        document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function beep() {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.type = "sine"; osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.1);
+        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.5);
     }
 
-    function toggle() {
-        if (timerId) {
-            clearInterval(timerId);
-            timerId = null;
-            document.getElementById('startStop').innerText = 'СТАРТ';
+    function updateUI() {
+        const m = Math.floor(state.timeLeft / 60);
+        const s = state.timeLeft % 60;
+        document.getElementById('display').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+        document.getElementById('mode').innerText = state.isWork ? "Фокус" : (state.timeLeft > 300 ? "Велика перерва" : "Відпочинок");
+        document.getElementById('circle').style.borderColor = state.isWork ? "#8da399" : "#d4a373";
+        document.getElementById('cycleCount').innerText = `Виконано циклів: ${state.sessions}`;
+        document.body.className = state.isWork ? "" : "break-mode";
+    }
+
+    function toggleTimer() {
+        if (state.timerId) {
+            clearInterval(state.timerId);
+            state.timerId = null;
+            document.getElementById('btnStart').innerText = "Пуск";
         } else {
-            timerId = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    updateDisplay();
+            document.getElementById('btnStart').innerText = "Пауза";
+            state.timerId = setInterval(() => {
+                if (state.timeLeft > 0) {
+                    state.timeLeft--;
+                    updateUI();
                 } else {
-                    clearInterval(timerId);
-                    alert("Час відпочити!");
+                    complete();
                 }
             }, 1000);
-            document.getElementById('startStop').innerText = 'ПАУЗА';
         }
     }
 
-    function reset() {
-        clearInterval(timerId);
-        timerId = null;
-        timeLeft = 1500;
-        updateDisplay();
-        document.getElementById('startStop').innerText = 'СТАРТ';
+    function complete() {
+        beep();
+        clearInterval(state.timerId);
+        state.timerId = null;
+        
+        if (state.isWork) {
+            state.sessions++;
+            state.isWork = false;
+            // Кожен 6-й цикл - велика перерва (15 хв / 900 сек), інші - 5 хв (300 сек)
+            state.timeLeft = (state.sessions % 6 === 0) ? 900 : 300;
+        } else {
+            state.isWork = true;
+            state.timeLeft = 1500;
+        }
+        
+        document.getElementById('btnStart').innerText = "Пуск";
+        updateUI();
     }
+
+    updateUI();
 </script>
 
 </body>
