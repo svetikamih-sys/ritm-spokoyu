@@ -80,6 +80,7 @@
             box-shadow: 0 4px 15px rgba(141, 163, 153, 0.3);
         }
 
+        /* Стиль для лічильника, щоб він не порушував відстані */
         .cycle-counter {
             margin-top: 12px;
             font-size: 0.85rem;
@@ -149,15 +150,16 @@
 
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    function beep() {
+    function playBeep() {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.type = "sine"; osc.frequency.value = 880;
-        gain.gain.setValueAtTime(0, audioCtx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.1);
-        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.5);
     }
 
     function updateUI() {
@@ -189,14 +191,14 @@
     }
 
     function complete() {
-        beep();
+        playBeep();
         clearInterval(state.timerId);
         state.timerId = null;
         
         if (state.isWork) {
             state.sessions++;
             state.isWork = false;
-            // Кожен 6-й цикл - велика перерва (15 хв / 900 сек), інші - 5 хв (300 сек)
+            // Кожен 6-й цикл - 15 хв, інакше 5 хв
             state.timeLeft = (state.sessions % 6 === 0) ? 900 : 300;
         } else {
             state.isWork = true;
@@ -209,6 +211,5 @@
 
     updateUI();
 </script>
-
 </body>
 </html>
