@@ -36,180 +36,289 @@
             padding: 10px;
         }
 
-        .header { margin-bottom: 20px; }
-        .header h1 { font-size: 1.1rem; opacity: 0.6; font-weight: 400; margin-bottom: 8px; }
-        .header h2 { font-size: 1.4rem; color: #d35400; text-transform: uppercase; letter-spacing: 0.5px; }
-        .header p { font-weight: 600; font-size: 1rem; margin-top: 4px; }
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--work);
+            font-weight: 600;
+            font-size: 0.7rem;
+            margin-bottom: 5px;
+        }
+
+        h1 { font-size: 1.6rem; font-weight: 300; margin-bottom: 15px; }
 
         .timer-card {
             background: var(--card);
+            padding: 20px;
+            border-radius: 40px;
             width: 100%;
-            max-width: 360px;
-            padding: 25px 20px;
-            border-radius: 32px;
-            box-shadow: 0 12px 40px rgba(61, 66, 64, 0.06);
-            position: relative;
+            max-width: 320px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        .timer-display {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 20px;
-            border: 8px solid #eee;
-            border-radius: 50%;
+        .status-msg {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            color: var(--work);
+            min-height: 2.5rem;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            transition: border-color 0.8s ease;
+            justify-content: center;
+            padding: 0 10px;
         }
 
-        .time { font-size: 3.5rem; font-weight: 700; color: var(--txt); letter-spacing: -1px; }
-        .mode-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin-top: -4px; }
+        .progress-container {
+            position: relative;
+            width: 180px; 
+            height: 180px;
+            margin: 0 auto 15px;
+        }
 
-        .controls button {
-            background: var(--work);
-            color: white;
+        svg {
+            transform: rotate(-90deg);
+            width: 180px;
+            height: 180px;
+            display: block;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: #f0ede9;
+            stroke-width: 6;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke: var(--work);
+            stroke-width: 6;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s linear, stroke 0.5s ease;
+        }
+
+        .time-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.8rem;
+            font-weight: 200;
+        }
+
+        .controls { display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; flex-wrap: wrap; }
+
+        button {
+            padding: 10px 18px;
+            border-radius: 30px;
             border: none;
-            padding: 14px 44px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(141, 163, 153, 0.3);
+            font-size: 0.85rem;
+            background: #f0ede9;
+            min-width: 85px;
         }
 
-        /* Стиль для лічильника, щоб він не порушував відстані */
-        .cycle-counter {
-            margin-top: 12px;
-            font-size: 0.85rem;
+        button#start { background: var(--work); color: white; }
+
+        .cycle-info {
+            width: 100%;
+            font-size: 0.75rem;
             color: var(--work);
             font-weight: 600;
+            margin-top: 5px;
         }
 
-        .content-footer {
-            text-align: left;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #f0eee9;
+        .water-tracker {
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #f0ede9;
         }
 
-        .content-footer p { font-size: 0.9rem; color: #555; margin-bottom: 12px; }
-        .content-footer strong { font-size: 1.05rem; display: block; margin-bottom: 8px; color: var(--txt); }
+        .drops { margin-top: 5px; display: flex; justify-content: center; gap: 4px; }
+        .drop { font-size: 1.1rem; cursor: pointer; opacity: 0.2; }
+        .drop.filled { opacity: 1; }
 
-        .tg-link {
-            display: block;
-            background: #2980b9;
-            color: white !important;
-            text-decoration: none;
-            text-align: center;
-            padding: 14px;
-            border-radius: 50px;
-            font-weight: 700;
-            margin-top: 15px;
+        .info-section { padding: 40px 20px; max-width: 600px; margin: 0 auto; text-align: center; }
+        .cta { background: white; padding: 25px; border-radius: 30px; margin-top: 20px; }
+        .btn-tg { 
+            display: inline-block; padding: 12px 24px; background: var(--work); 
+            color: white; text-decoration: none; border-radius: 30px; font-weight: 600; margin-top: 15px; 
         }
     </style>
 </head>
 <body>
 
 <div class="hero">
-    <div class="header">
-        <h1>Svetlana Mihalchina</h1>
-        <h2>Стоп кортизол - Геть набряки</h2>
-        <p>Твій метаболічний ритм</p>
-    </div>
+    <p class="eyebrow">Стоп кортизол - геть набряки</p>
+    <h1>Твій метаболічний ритм</h1>
 
     <div class="timer-card">
-        <div class="timer-display" id="circle">
-            <div class="time" id="display">25:00</div>
-            <div class="mode-label" id="mode">Фокус</div>
+        <div id="status" class="status-msg">Готова вимкнути режим тривоги?</div>
+        
+        <div class="progress-container">
+            <svg viewBox="0 0 180 180">
+                <circle class="circle-bg" cx="90" cy="90" r="80"></circle>
+                <circle id="progress" class="circle-progress" cx="90" cy="90" r="80"></circle>
+            </svg>
+            <div id="time" class="time-display">25:00</div>
         </div>
 
         <div class="controls">
-            <button id="btnStart" onclick="toggleTimer()">Пуск</button>
-            <div class="cycle-counter" id="cycleCount">Виконано циклів: 0</div>
+            <button id="start">Пуск</button>
+            <button id="reset" style="background:transparent; border: 1px solid #f0ede9;">Скинути</button>
+            <div class="cycle-info" id="cycleCount">Циклів сьогодні: 0</div>
         </div>
 
-        <div class="content-footer">
-            <p>Кортизол не розрізняє реальну загрозу та робочий аврал. Постійна напруга-сигнал організму "запасати воду та жир". Ці 25 хвилин фокусу допомагають вийти з режиму виживання.</p>
-            <strong>Ти не повинна виживати.</strong>
-            <p>В моєму телеграмі - про те, як підтримати організм:</p>
-            <a href="https://t.me/+nawx4tmAkOszMDJi" class="tg-link" target="_blank">Приєднатися до каналу</a>
+        <div class="water-tracker">
+            <p style="font-size: 0.75rem; color: var(--dim);">Склянки води:</p>
+            <div id="water-drops" class="drops"></div>
         </div>
     </div>
 </div>
 
+<div class="info-section">
+    <h2 style="font-weight: 300; margin-bottom: 10px; color: var(--work);">Чому це важливо?</h2>
+    <p style="font-size: 0.95rem;">Кортизол не розрізняє реальну загрозу та робочий аврал. Постійна напруга - це сигнал організму "запасати воду та жир". Ці 25 хвилин фокусу допомагають вийти з режиму виживання.</p>
+    
+    <div class="cta">
+        <h2 style="font-weight: 300; font-size: 1.2rem;">Ти не повинна виживати</h2>
+        <p style="font-size: 0.95rem;"> В моєму телеграмі - про те, як ще підтримати організм. </p>
+        <a href="https://t.me/+nawx4tmAkOszMDJi" class="btn-tg" target="_blank">Telegram</a>
+    </div>
+</div>
+
 <script>
-    let state = {
-        timeLeft: 1500,
-        isWork: true,
-        timerId: null,
-        sessions: 0
-    };
+const advices = [
+    "Ковток води - це допомога твоїй лімфі вимити все зайве.",
+    "Опусти плечі. Затиснута шия провокує набряки.",
+    "Глибокий видих. Не давай кортизолу шансів.",
+    "Подивись у вікно. Твоїм нервам потрібна лінія горизонту.",
+    "Встань і потягнися. Тіло - це енергія, а не склад.",
+    "Помасажуй потилицю. Сигнал мозку: 'Ми в безпеці'.",
+    "30 секунд тиші варті години сну для твого мозку.",
+    "Усміхнися собі. Це знижує стрес без зусиль."
+];
 
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let state = {
+    timeLeft: 1500,
+    endTime: null,
+    timerId: null,
+    isWork: true,
+    sessions: parseInt(localStorage.getItem('p_sess')) || 0,
+    water: parseInt(localStorage.getItem('d_wat')) || 0
+};
 
-    function playBeep() {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.5);
+const prog = document.getElementById('progress');
+const stat = document.getElementById('status');
+const disp = document.getElementById('time');
+const btnStart = document.getElementById('start');
+const waterContainer = document.getElementById('water-drops');
+const cycleDisp = document.getElementById('cycleCount');
+
+const circum = 2 * Math.PI * 80;
+prog.style.strokeDasharray = circum;
+
+// Функція сигналу
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playBeep() {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.type = "sine"; osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.5);
+}
+
+function updateTheme() {
+    if (state.isWork) {
+        document.body.classList.remove('break-mode');
+        prog.style.stroke = "var(--work)";
+        stat.style.color = "var(--work)";
+        stat.textContent = state.timerId ? "Працюємо без надриву." : "Готова вимкнути режим тривоги?";
+    } else {
+        document.body.classList.add('break-mode');
+        prog.style.stroke = "var(--break)";
+        stat.style.color = "var(--break)";
+        stat.textContent = advices[Math.floor(Math.random() * advices.length)];
     }
+}
 
-    function updateUI() {
-        const m = Math.floor(state.timeLeft / 60);
-        const s = state.timeLeft % 60;
-        document.getElementById('display').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
-        document.getElementById('mode').innerText = state.isWork ? "Фокус" : (state.timeLeft > 300 ? "Велика перерва" : "Відпочинок");
-        document.getElementById('circle').style.borderColor = state.isWork ? "#8da399" : "#d4a373";
-        document.getElementById('cycleCount').innerText = `Виконано циклів: ${state.sessions}`;
-        document.body.className = state.isWork ? "" : "break-mode";
+function updateUI() {
+    const m = Math.floor(state.timeLeft / 60);
+    const s = state.timeLeft % 60;
+    disp.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+    const total = state.isWork ? 1500 : (state.sessions % 4 === 0 && state.sessions !== 0 ? 900 : 300);
+    prog.style.strokeDashoffset = circum - (state.timeLeft / total) * circum;
+    cycleDisp.textContent = `Циклів сьогодні: ${state.sessions}`;
+}
+
+function renderWater() {
+    waterContainer.innerHTML = '';
+    for (let i = 1; i <= 8; i++) {
+        const drop = document.createElement('span');
+        drop.className = `drop ${i <= state.water ? 'filled' : ''}`;
+        drop.innerHTML = '💧';
+        drop.onclick = () => {
+            state.water = i;
+            localStorage.setItem('d_wat', state.water);
+            renderWater();
+        };
+        waterContainer.appendChild(drop);
     }
+}
 
-    function toggleTimer() {
-        if (state.timerId) {
-            clearInterval(state.timerId);
-            state.timerId = null;
-            document.getElementById('btnStart').innerText = "Пуск";
-        } else {
-            document.getElementById('btnStart').innerText = "Пауза";
-            state.timerId = setInterval(() => {
-                if (state.timeLeft > 0) {
-                    state.timeLeft--;
-                    updateUI();
-                } else {
-                    complete();
-                }
-            }, 1000);
-        }
-    }
-
-    function complete() {
-        playBeep();
-        clearInterval(state.timerId);
-        state.timerId = null;
-        
-        if (state.isWork) {
-            state.sessions++;
-            state.isWork = false;
-            // Кожен 6-й цикл - 15 хв, інакше 5 хв
-            state.timeLeft = (state.sessions % 6 === 0) ? 900 : 300;
-        } else {
-            state.isWork = true;
-            state.timeLeft = 1500;
-        }
-        
-        document.getElementById('btnStart').innerText = "Пуск";
+function tick() {
+    const now = Date.now();
+    const diff = Math.round((state.endTime - now) / 1000);
+    if (diff <= 0) {
+        completeSession();
+    } else {
+        state.timeLeft = diff;
         updateUI();
     }
+}
 
+function completeSession() {
+    playBeep();
+    clearInterval(state.timerId);
+    state.timerId = null;
+    
+    if (state.isWork) {
+        state.sessions++;
+        localStorage.setItem('p_sess', state.sessions);
+        state.isWork = false;
+        state.timeLeft = (state.sessions % 4 === 0) ? 900 : 300;
+    } else {
+        state.isWork = true;
+        state.timeLeft = 1500;
+    }
+    
+    btnStart.textContent = "Пуск";
+    updateTheme();
     updateUI();
+}
+
+function toggleTimer() {
+    if (state.timerId) {
+        clearInterval(state.timerId);
+        state.timerId = null;
+        btnStart.textContent = "Пуск";
+    } else {
+        state.endTime = Date.now() + (state.timeLeft * 1000);
+        state.timerId = setInterval(tick, 1000);
+        btnStart.textContent = "Пауза";
+        updateTheme();
+    }
+}
+
+btnStart.addEventListener('click', toggleTimer);
+document.getElementById('reset').addEventListener('click', () => {
+    if (confirm("Скинути ритм?")) {
+        localStorage.clear();
+        location.reload();
+    }
+});
+
+updateUI();
+renderWater();
 </script>
 </body>
 </html>
